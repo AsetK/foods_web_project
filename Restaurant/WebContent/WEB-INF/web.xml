@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Restaurant</display-name>
+  
+  <servlet>
+        <servlet-name>RestaurantController</servlet-name>
+        <servlet-class>com.epam.restaurant.controller.RestaurantController</servlet-class>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>RestaurantController</servlet-name>
+        <url-pattern>/pages/*</url-pattern>
+   </servlet-mapping>
+  
+    <filter>
+       <filter-name>SecurityFilterUser</filter-name>
+        <filter-class>com.epam.restaurant.filters.SecurityFilterUser</filter-class>                     
+   </filter>
+   <filter-mapping>
+       <filter-name>SecurityFilterUser</filter-name>
+       <url-pattern>/Menu</url-pattern>
+       <url-pattern>/Order</url-pattern>
+       <url-pattern>/OrderIsDone</url-pattern>
+       <url-pattern>/Bill</url-pattern>
+       <url-pattern>/UserOrders</url-pattern>
+       <url-pattern>/pages/menu</url-pattern>
+       <url-pattern>/pages/order</url-pattern>
+       <url-pattern>/pages/userorders</url-pattern>
+       <url-pattern>/pages/submitorder</url-pattern>
+       <url-pattern>/pages/bill</url-pattern>
+       <url-pattern>/pages/orderpayment</url-pattern>
+   </filter-mapping>   
+   
+   <filter>
+       <filter-name>SecurityFilterAdmin</filter-name>
+        <filter-class>com.epam.restaurant.filters.SecurityFilterAdmin</filter-class>                     
+   </filter>
+   <filter-mapping>
+       <filter-name>SecurityFilterAdmin</filter-name>
+       <url-pattern>/OrdersList</url-pattern>
+       <url-pattern>/EditMenu</url-pattern>
+       <url-pattern>/pages/orderslist</url-pattern>
+       <url-pattern>/pages/executeorder</url-pattern>
+       <url-pattern>/pages/editmenu</url-pattern>
+       <url-pattern>/pages/addfood</url-pattern>
+       <url-pattern>/pages/deletefood</url-pattern>
+       <url-pattern>/pages/restorefood</url-pattern>
+       <url-pattern>/pages/changefoodprice</url-pattern>
+   </filter-mapping>   
+   
+   <filter>
+       <filter-name>AuthFilter</filter-name>
+        <filter-class>com.epam.restaurant.filters.AuthFilter</filter-class>                     
+   </filter>
+   <filter-mapping>
+       <filter-name>AuthFilter</filter-name>
+       <url-pattern>/</url-pattern>
+       <url-pattern>/pages/login</url-pattern>
+   </filter-mapping>
+   
+    <filter>
+       <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.epam.restaurant.filters.EncodingFilter</filter-class>                     
+   </filter>
+   <filter-mapping>
+       <filter-name>EncodingFilter</filter-name>
+       <url-pattern>/pages/*</url-pattern>
+   </filter-mapping>  
+   
+   <servlet>
+        <servlet-name>Auth</servlet-name>
+        <jsp-file>/WEB-INF/view/auth.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>Auth</servlet-name>
+        <url-pattern>/</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+        <servlet-name>Menu</servlet-name>
+        <jsp-file>/WEB-INF/view/menu.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>Menu</servlet-name>
+        <url-pattern>/Menu</url-pattern>
+   </servlet-mapping>
+    
+   <servlet>
+        <servlet-name>Order</servlet-name>
+        <jsp-file>/WEB-INF/view/order.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>Order</servlet-name>
+        <url-pattern>/Order</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+        <servlet-name>OrderIsDone</servlet-name>
+        <jsp-file>/WEB-INF/view/orderisdone.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>OrderIsDone</servlet-name>
+        <url-pattern>/OrderIsDone</url-pattern>
+   </servlet-mapping>
+   
+    <servlet>
+        <servlet-name>Bill</servlet-name>
+        <jsp-file>/WEB-INF/view/bill.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>Bill</servlet-name>
+        <url-pattern>/Bill</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+        <servlet-name>UserOrders</servlet-name>
+        <jsp-file>/WEB-INF/view/userorders.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>UserOrders</servlet-name>
+        <url-pattern>/UserOrders</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+        <servlet-name>OrdersList</servlet-name>
+        <jsp-file>/WEB-INF/view/orderslist.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>OrdersList</servlet-name>
+        <url-pattern>/OrdersList</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+        <servlet-name>EditMenu</servlet-name>
+        <jsp-file>/WEB-INF/view/editmenu.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+        <servlet-name>EditMenu</servlet-name>
+        <url-pattern>/EditMenu</url-pattern>
+   </servlet-mapping>
+   
+   <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+  
+</web-app>
