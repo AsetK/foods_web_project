@@ -45,14 +45,7 @@ public class OrderPaymentCommand implements ActionCommand{
 		int paidStatusID = orderDAO.selectPaidStatusID(PAID_STATUS);
 		int orderPaymnetStatusID = orderDAO.selectPaymentStatus(orderID, userID);
 		
-		if(paidStatusID == orderPaymnetStatusID)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return paidStatusID == orderPaymnetStatusID;
 	}
 
 }

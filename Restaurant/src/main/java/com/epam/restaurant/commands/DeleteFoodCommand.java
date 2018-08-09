@@ -1,10 +1,9 @@
 package com.epam.restaurant.commands;
 
-import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
-import com.epam.restaurant.dao.FoodDAO;
+import com.epam.restaurant.commandsservice.FoodAvailabilityChanger;
 
 public class DeleteFoodCommand implements ActionCommand{
 	
@@ -16,11 +15,7 @@ public class DeleteFoodCommand implements ActionCommand{
 	@Override
 	public String execute(HttpServletRequest request) 
 	{
-		Enumeration<String> paramNames = request.getParameterNames();
-		String foodName = paramNames.nextElement();
-		
-		FoodDAO foodDAO = new FoodDAO();
-		foodDAO.updateFoodStatus(foodName,NOT_AVAILABLE_STATUS);
+		FoodAvailabilityChanger.change(request, NOT_AVAILABLE_STATUS);
 		
 		LOGGER.info(LOGGER_TEXT);
 		

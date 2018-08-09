@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 import org.apache.log4j.Logger;
 
 import com.epam.restaurant.dao.FoodDAO;
@@ -23,7 +25,7 @@ public final class ConnectionPool {
 	private String connectionLogin;
 	private String connectionPassword;
 	private int connectionAmount;
-	private ArrayBlockingQueue<Connection> availableConnections;
+	private BlockingQueue<Connection> availableConnections;
 	
 	private ConnectionPool()
 	{

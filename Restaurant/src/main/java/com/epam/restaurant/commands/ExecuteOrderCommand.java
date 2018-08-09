@@ -34,20 +34,13 @@ public class ExecuteOrderCommand implements ActionCommand{
 		}
 	}
 	
-	private boolean orderIsExecuted( int orderID)
+	private boolean orderIsExecuted(int orderID)
 	{
 		OrderDAO orderDAO = new OrderDAO();
 		int executedStatusID = orderDAO.selectExecutedStatusID(EXECUTED_STATUS);
 		int orderExecutionStatusID = orderDAO.selectExecutionStatus(orderID);
 		
-		if(executedStatusID == orderExecutionStatusID)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return executedStatusID == orderExecutionStatusID;
 	}
 
 }

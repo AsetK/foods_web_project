@@ -24,11 +24,10 @@ public class SubmitOrderCommand implements ActionCommand{
 		if(session.getAttribute(ORDER_ID_ATTRIBUTE) == null)
 		{
 			Order demoOrder = (Order) session.getAttribute(DEMO_ORDER_ATTRIBUTE);
-			Order order = demoOrder;
 			
 			OrderDAO orderDAO = new OrderDAO();
 			int userID = (int) session.getAttribute(USER_ID_ATTRIBUTE);
-			int orderID = orderDAO.create(order, userID);
+			int orderID = orderDAO.create(demoOrder, userID);
 	    	
 	    	session.setAttribute(ORDER_ID_ATTRIBUTE, orderID);
 	    	

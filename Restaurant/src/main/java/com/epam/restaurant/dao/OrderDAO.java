@@ -17,7 +17,7 @@ import com.epam.restaurant.entity.Food;
 import com.epam.restaurant.entity.Order;
 import com.epam.restaurant.entityservice.OrderItemAdder;
 
-public class OrderDAO {
+public class OrderDAO extends AbstractOrderDAO{
 	
 	private static final int ILLEGAL_ORDER_ID = -1;
 	private static final Logger LOGGER = Logger.getLogger(OrderDAO.class);
@@ -223,31 +223,9 @@ public class OrderDAO {
 			cmd.setInt(2, languageID);
 			cmd.setInt(3, languageID);
 			ResultSet result =  cmd.executeQuery();
-			int currentOrderID = ILLEGAL_ORDER_ID;
-			Order order = null;
-			while(result.next())
-			{
-				if(currentOrderID != result.getInt(1))
-				{
-					order = new Order();
-					orders.add(order);
-					currentOrderID = result.getInt(1);
-				}
-				int order_id = result.getInt(1);
-				int foodID = result.getInt(2);
-				String foodName = result.getString(3);
-				String foodDescription = result.getString(4);
-				double foodPrice = result.getDouble(5);
-				int foodAmount = result.getInt(6);
-				double totalPrice = result.getDouble(7);
-				String orderStatus = result.getString(8);
-				String paymentStatus = result.getString(9);
-				
-				Food food = new Food();
-				food.setId(foodID).setName(foodName).setDescription(foodDescription).setPrice(foodPrice);
-				order.setItems(new OrderItemAdder().addItem(order, food, foodAmount));
-				order.setOrderID(order_id).setOrderStatus(orderStatus).setPaymentStatus(paymentStatus).setTotalPrice(totalPrice);
-			}
+			
+			addFoodsInOrders(result, orders);
+			
 		}
 		catch (SQLException exc) 
 		{
@@ -273,31 +251,8 @@ public class OrderDAO {
 			cmd.setInt(3, languageID);
 			cmd.setInt(4, userID);
 			ResultSet result =  cmd.executeQuery();
-			int currentOrderID = ILLEGAL_ORDER_ID;
-			Order order = null;
-			while(result.next())
-			{
-				if(currentOrderID != result.getInt(1))
-				{
-					order = new Order();
-					orders.add(order);
-					currentOrderID = result.getInt(1);
-				}
-				int order_id = result.getInt(1);
-				int foodID = result.getInt(2);
-				String foodName = result.getString(3);
-				String foodDescription = result.getString(4);
-				double foodPrice = result.getDouble(5);
-				int foodAmount = result.getInt(6);
-				double totalPrice = result.getDouble(7);
-				String orderStatus = result.getString(8);
-				String paymentStatus = result.getString(9);
-				
-				Food food = new Food();
-				food.setId(foodID).setName(foodName).setDescription(foodDescription).setPrice(foodPrice);
-				order.setItems(new OrderItemAdder().addItem(order, food, foodAmount));
-				order.setOrderID(order_id).setOrderStatus(orderStatus).setPaymentStatus(paymentStatus).setTotalPrice(totalPrice);
-			}
+			
+			addFoodsInOrders(result, orders);
 		}
 		catch (SQLException exc) 
 		{
@@ -318,9 +273,7 @@ public class OrderDAO {
 		
 		try (PreparedStatement cmd = conn.prepareStatement(SQL_UPDATE_ORDER_STATUS))
 		{
-			cmd.setInt(1, executedStatusID);
-			cmd.setInt(2, orderID);
-			cmd.executeUpdate();
+			serveUpdateStatusMethods(cmd, executedStatusID, orderID);
 		}
 		catch (SQLException exc) 
 		{
@@ -332,6 +285,7 @@ public class OrderDAO {
 	
 	public void updatePaymentStatus(int orderID, String paidStatus)
 	{
+		
 		ConnectionPool pool = ConnectionPool.getInstance();
 		Connection conn = pool.retrieve();
 		
@@ -339,9 +293,7 @@ public class OrderDAO {
 		
 		try (PreparedStatement cmd = conn.prepareStatement(SQL_UPDATE_PAYMENT_STATUS))
 		{
-			cmd.setInt(1, paidStatusID);
-			cmd.setInt(2, orderID);
-			cmd.executeUpdate();
+			serveUpdateStatusMethods(cmd, paidStatusID, orderID);
 		}
 		catch (SQLException exc) 
 		{
@@ -360,10 +312,7 @@ public class OrderDAO {
 		
 		try (PreparedStatement cmd = conn.prepareStatement(SQL_SELECT_PAID_STATUS_ID))
 		{
-			cmd.setString(1, paidStatus);
-			ResultSet result =  cmd.executeQuery();
-			result.next();
-			paidStatusID = result.getInt(1);
+			paidStatusID = serveSelectStatusIDMethods(cmd, paidStatus);
 		}
 		catch (SQLException exc) 
 		{
@@ -384,10 +333,7 @@ public class OrderDAO {
 		
 		try (PreparedStatement cmd = conn.prepareStatement(SQL_SELECT_EXECUTED_STATUS_ID))
 		{
-			cmd.setString(1, executedStatus);
-			ResultSet result =  cmd.executeQuery();
-			result.next();
-			executedStatusID = result.getInt(1);
+			executedStatusID = serveSelectStatusIDMethods(cmd, executedStatus);
 		}
 		catch (SQLException exc) 
 		{
